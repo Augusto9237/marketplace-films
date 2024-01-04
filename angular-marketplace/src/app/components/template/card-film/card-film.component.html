@@ -1,0 +1,23 @@
+<mat-card-content class="mat-card-container" *ngFor="let film of listFilms">
+  <mat-card class="card-film">
+    <mat-card-title class="">
+      <h2>{{ film.name }}</h2>
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      <h3>{{ film.category }}</h3>
+    </mat-card-subtitle>
+
+    <mat-card-content class="card-content">
+      <img src="{{ film.imgLink }}" alt="capa do filme" />
+      <p class="card-description">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque ducimus
+        omnis, deserunt expedita molestias magnam adipisci iusto nulla
+        distinctio. Harum doloremque laudantium eius non quasi, accusamus amet
+        numquam voluptate cum.
+      </p>
+      <p class="card-description">{{ film.price }}</p>
+      <button></button>
+    </mat-card-content>
+  </mat-card>
+</mat-card-content>
