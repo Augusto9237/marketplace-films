@@ -8,7 +8,7 @@
     fixedTopGap="100"
   >
     <mat-list class="list">
-      <a mat-list-item href="">
+      <a mat-list-item routerLink="/">
         <div class="item-list">
           <i class="material-icons">home</i>
           Home
@@ -32,5 +32,6 @@
     <button mat-icon-button (click)="sidenav.toggle()" class="mat-nav-button">
       <i class="material-icons">menu</i>
     </button>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
