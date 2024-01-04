@@ -18,7 +18,6 @@ export class CardFilmComponent implements OnInit{
   ngOnInit() {
     this.checkoutService.getListFilms().subscribe((film) => {
       this.listFilms = film;
-      console.log(this.listFilms);
     });
 
   }
