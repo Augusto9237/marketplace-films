@@ -1,0 +1,123 @@
+<mat-card class="mat-card-main mat-elevation-z4">
+  <mat-card-content>
+    <mat-card-title>
+      <h2 class="title">Checkout</h2>
+    </mat-card-title>
+
+    <mat-card>
+      <mat-card-content>
+        <h2>{{ listSelectedFilms.length }} selected items</h2>
+        <h3>Total cost: {{ totalPrice }}</h3>
+
+        <mat-card
+          class="mat-card-film"
+          [class.isValid]="disabled === true"
+          *ngFor="let film of listSelectedFilms"
+        >
+          <mat-card-content class="mat-card-content">
+            <div>
+              <mat-card-title>
+                <h2>
+                  {{ film.name }}
+                </h2>
+              </mat-card-title>
+
+              <mat-card-subtitle>
+                {{ film.price }}
+              </mat-card-subtitle>
+            </div>
+
+            <button mat-flat-button color="warn" (click)="exclude(film)">
+              Exclude
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="actions-container">
+      <button
+        mat-flat-button
+        color="warn"
+        (click)="excludeAll()"
+        [disabled]="disabled === true"
+        class="excludeAll"
+      >
+        Exclude All
+      </button>
+    </div>
+
+    <mat-card class="mat-form">
+      <mat-card-content>
+        <form id="form">
+          <strong> Fil in the fields below to payment:</strong>
+          <p>
+            <mat-form-field appearance="outline" class="input-form">
+              <mat-label> What's you name? </mat-label>
+
+              <input
+                matInput
+                placeholder="Your name"
+                required
+                name="name"
+                [disabled]="disabled === true"
+              />
+              <i class="material-icons" matSuffix required>person</i>
+              <mat-hint>Ex: Jhon, Maria...</mat-hint>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" class="input-form">
+              <mat-label> What's your address? </mat-label>
+
+              <input
+                matInput
+                placeholder="Your address"
+                required
+                name="address"
+                [disabled]="disabled === true"
+              />
+              <i class="material-icons" matSuffix required>home</i>
+              <mat-hint>Ex: Pesidente Vargass</mat-hint>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="fill" class="input-form">
+              <mat-label> Enter your password </mat-label>
+
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                placeholder="Your password"
+                required
+                name="password"
+                [disabled]="disabled === true"
+              />
+              <button mat-icon-button matSuffix (click)="hide = !hide">
+                <i class="material-icons" matSuffix required>{{
+                  hide ? "visibility_off" : "visibility_on"
+                }}</i>
+              </button>
+            </mat-form-field>
+          </p>
+
+          <button
+            type="submit"
+            mat-flat-button
+            class="mat-pay"
+            (click)="payment()"
+            [disabled]="disabled === true"
+          >
+            Pay
+          </button>
+
+          <button mat-flat-button class="mat-cancel" (click)="cancel()">
+            {{ disabled ? "Back" : "Cancel" }}
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

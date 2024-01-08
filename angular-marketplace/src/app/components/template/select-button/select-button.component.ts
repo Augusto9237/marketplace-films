@@ -26,7 +26,7 @@ export class SelectButtonComponent implements OnInit {
 
   unselectFilm() {
     this.disabled = false
-    this.checkoutService.unselectFilm;
+    this.checkoutService.unselectFilm();
   }
 
 }

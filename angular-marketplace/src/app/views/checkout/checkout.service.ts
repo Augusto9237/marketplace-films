@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Film } from '../list-films/film.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,17 @@ export class CheckoutService {
     this._filmHandler = value;
   }
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private snakBar : MatSnackBar) { }
+
+  showMessage(message: string, isError: boolean = false): void {
+    this.snakBar.open(message, 'X', {
+      duration: 3000,
+      horizontalPosition: "right",
+      verticalPosition: "top",
+      panelClass: isError ? ['error'] : ['success']
+    })
+
+  }
 
   getListFilms(): Observable<Film[]> {
     return this.httpClient.get<Film[]>(this.baseUrl + '/films');
@@ -42,7 +53,6 @@ export class CheckoutService {
     setTimeout(() => {
       this.totalPrice += this.getPrice();
       this.listSelectedFilms.push(this.getFilm());
-      console.log(this.listSelectedFilms);
     }, 1)
   }
 
@@ -55,6 +65,5 @@ export class CheckoutService {
     if (index > -1 || index === this.listSelectedFilms.lastIndexOf(this.getFilm())) {
       this.listSelectedFilms.splice(index, 1);
     }
-    console.log(this.listSelectedFilms);
   }
 }
