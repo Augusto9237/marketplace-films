@@ -10,7 +10,18 @@
   <mat-card-content>
     <app-card-film></app-card-film>
   </mat-card-content>
-  <button>
-    <a routerLink="/checkout">To chekcout</a>
+  <button
+  mat-fab
+  color="primary"
+  matBadge=1
+  matBadgePosition="after"
+  matBadgeColor="accent"
+[matBadgeHidden]="hidden"
+  (mouseover)="toggleBadgeVisibility()"
+  (mouseout)="toggleBadgeVisibility()"
+  (click)="toCheckout()"
+  >
+  <i class="material-icons">shopping_cart</i>
+  <p>To Checkout</p>
   </button>
 </mat-card>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CardFilmComponent } from "../../components/template/card-film/card-film.component";
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
 import { CheckoutService } from '../checkout/checkout.service';
 import { Film } from './film.model';
 
@@ -10,16 +12,30 @@ import { Film } from './film.model';
   standalone: true,
   templateUrl: './list-films.component.html',
   styleUrl: './list-films.component.css',
-  imports: [CardFilmComponent, MatCardModule, RouterModule]
+  imports: [CardFilmComponent, MatCardModule, MatButtonModule, RouterModule, MatBadgeModule]
 })
 export class ListFilmsComponent implements OnInit {
-  listFilms: Film[] = []
+  listFilms: Film[] = [];
+  listSelectedFilms!:number;
+  hidden = false;
 
-  constructor(private checkoutService: CheckoutService) {}
+  constructor(private checkoutService: CheckoutService, private route: Router) {}
 
   ngOnInit(): void {
     this.checkoutService.getListFilms().subscribe((film) => {
       this.listFilms = film;
     })
+  }
+
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
+  }
+
+  toggleCount() {
+    return this.listSelectedFilms =  this.checkoutService.listSelectedFilms.length
+  }
+
+  toCheckout():void{
+    this.route.navigate(['/checkout']);
   }
 }
