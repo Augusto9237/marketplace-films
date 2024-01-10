@@ -7,7 +7,7 @@
     <mat-card>
       <mat-card-content>
         <h2>{{ listSelectedFilms.length }} selected items</h2>
-        <h3>Total cost: {{ totalPrice }}</h3>
+        <h3>Total cost: {{ totalPrice | currency : "BRL" }}</h3>
 
         <mat-card
           class="mat-card-film"
@@ -23,7 +23,7 @@
               </mat-card-title>
 
               <mat-card-subtitle>
-                {{ film.price }}
+                {{ film.price | currency : "BRL" }}
               </mat-card-subtitle>
             </div>
 
@@ -53,7 +53,13 @@
           <strong> Fil in the fields below to payment:</strong>
           <p>
             <mat-form-field appearance="outline" class="input-form">
-              <mat-label> What's you name? </mat-label>
+              <mat-label>
+                {{
+                  disabled
+                    ? "Please select at least one film"
+                    : "What's you name? "
+                }}
+              </mat-label>
 
               <input
                 matInput
@@ -61,6 +67,7 @@
                 required
                 name="name"
                 [disabled]="disabled === true"
+                [(ngModel)]="client.name"
               />
               <i class="material-icons" matSuffix required>person</i>
               <mat-hint>Ex: Jhon, Maria...</mat-hint>
@@ -69,7 +76,13 @@
 
           <p>
             <mat-form-field appearance="outline" class="input-form">
-              <mat-label> What's your address? </mat-label>
+              <mat-label>
+                {{
+                  disabled
+                    ? "Please select at least one film"
+                    : "What's your address?"
+                }}</mat-label
+              >
 
               <input
                 matInput
@@ -77,6 +90,7 @@
                 required
                 name="address"
                 [disabled]="disabled === true"
+                [(ngModel)]="client.address"
               />
               <i class="material-icons" matSuffix required>home</i>
               <mat-hint>Ex: Pesidente Vargass</mat-hint>
@@ -93,6 +107,7 @@
                 placeholder="Your password"
                 required
                 name="password"
+                [(ngModel)]="client.password"
                 [disabled]="disabled === true"
               />
               <button mat-icon-button matSuffix (click)="hide = !hide">
@@ -108,7 +123,13 @@
             mat-flat-button
             class="mat-pay"
             (click)="payment()"
-            [disabled]="disabled === true"
+            [disabled]="
+              client.password == undefined ||
+              client.password == '' ||
+              totalPrice == 0
+                ? true
+                : false
+            "
           >
             Pay
           </button>

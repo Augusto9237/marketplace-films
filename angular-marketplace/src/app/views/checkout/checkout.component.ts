@@ -9,11 +9,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [MatCardModule, MatButtonToggleModule, MatSnackBarModule, MatFormFieldModule, MatInputModule, CommonModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonToggleModule, MatSnackBarModule, MatFormFieldModule, MatInputModule, CommonModule, MatButtonModule, FormsModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
 })
@@ -22,11 +23,16 @@ export class CheckoutComponent implements OnInit {
   totalPrice!: number;
   disabled: boolean = false
   hide: boolean = true
-  form: any
+  form: any;
+  client: any = {}
 
   constructor(private checkoutService: CheckoutService, private route: Router) { }
 
   ngOnInit(): void {
+    this.form = document.querySelector('#form');
+    this.form.addEventListener('click', (event: any) => {
+      event.preventDefault();
+    })
     this.totalPrice = this.checkoutService.totalPrice
     this.listSelectedFilms = this.checkoutService.listSelectedFilms
 
@@ -34,12 +40,25 @@ export class CheckoutComponent implements OnInit {
   }
 
   payment():void{
+    if(
+      this.client.address === undefined ||
+      this.client.name === undefined ||
+      this.client.password === undefined
+    ){
+      this.checkoutService.showMessage("Please select at least one film", false);
+      return;
+    }
     this.checkoutService.showMessage("Payment!", true);
     this.route.navigate(['/list-films'])
   }
 
   cancel():void{
     this.route.navigate(['/list-films'])
+    this.checkoutService.totalPrice = 0;
+    this.totalPrice = 0;
+    this.checkoutService.listSelectedFilms = [];
+    this.listSelectedFilms = [];
+
   }
 
   toggleButton() {
