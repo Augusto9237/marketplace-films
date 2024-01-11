@@ -16,12 +16,14 @@ import { Film } from './film.model';
 })
 export class ListFilmsComponent implements OnInit {
   listFilms: Film[] = [];
-  listSelectedFilms!:number;
+  listSelectedFilms!: number;
   hidden = false;
 
-  constructor(private checkoutService: CheckoutService, private route: Router) {}
+  constructor(private checkoutService: CheckoutService, private route: Router) { }
 
   ngOnInit(): void {
+    this.checkoutService.totalPrice = 0;
+    this.checkoutService.listSelectedFilms = [];
     this.checkoutService.getListFilms().subscribe((film) => {
       this.listFilms = film;
     })
@@ -32,10 +34,10 @@ export class ListFilmsComponent implements OnInit {
   }
 
   toggleCount() {
-    return this.listSelectedFilms =  this.checkoutService.listSelectedFilms.length
+    return this.listSelectedFilms = this.checkoutService.listSelectedFilms.length
   }
 
-  toCheckout():void{
+  toCheckout(): void {
     this.route.navigate(['/checkout']);
   }
 }

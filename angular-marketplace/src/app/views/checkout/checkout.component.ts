@@ -47,9 +47,10 @@ export class CheckoutComponent implements OnInit {
     ){
       this.checkoutService.showMessage("Please select at least one film", false);
       return;
+    }else{
+      this.checkoutService.showMessage(`Payment is successfull, good choice! confirmed order: to ${this.client.address} by ${this.client.name}`, true);
+      this.route.navigate(['../list-films'])
     }
-    this.checkoutService.showMessage("Payment!", true);
-    this.route.navigate(['/list-films'])
   }
 
   cancel():void{

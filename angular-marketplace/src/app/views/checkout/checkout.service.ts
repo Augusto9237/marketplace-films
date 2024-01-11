@@ -35,7 +35,7 @@ export class CheckoutService {
 
   constructor(private httpClient: HttpClient, private snakBar : MatSnackBar) { }
 
-  showMessage(message: string, isError: boolean = false): void {
+  showMessage(message: string, isError: boolean): void {
     this.snakBar.open(message, 'X', {
       duration: 3000,
       horizontalPosition: "right",
